@@ -147,3 +147,22 @@
             XT_OBJLOG(LLV_INFO, BF("make response to the shortCut %1%") % uKey);
         }
     }
+
+#define CMD_PROVIDER_LIST() \
+        CMD(string, CString)\
+        CMD(double, CDouble)\
+        CMD(long long, CInt64)\
+        CMD(int, CInt32)\
+        CMD(bool, CInt32)\
+
+#define CMD(typeTag, typeStr) \
+    inline void setValue(CIQMessage *& pMessage, int32_t tag, const typeTag& value) const {\
+        if (pMessage)\
+        {\
+            IQValue *pIQValue = new typeStr##IQValue(value);\
+            pMessage->setTagValue(tag, pIQValue);\
+        }\
+        };
+        CMD_PROVIDER_LIST()
+#undef CMD
+#undef CMD_PROVIDER_LIST
