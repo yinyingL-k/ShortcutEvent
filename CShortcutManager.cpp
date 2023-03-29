@@ -166,3 +166,21 @@
         CMD_PROVIDER_LIST()
 #undef CMD
 #undef CMD_PROVIDER_LIST
+                    
+                    
+                    template<class T_Detail>
++    void CTaskProgress::updateDetailXtTagByTaskDetail(const ttservice::CTaskDetailPtr& taskPtr, T_Detail pDetail)
++    {
++        if (NULL != taskPtr && NULL != taskPtr->m_xtTag && NULL != pDetail)
++        {
++            pDetail->m_xtTag = taskPtr->m_xtTag;
++            if (NULL != pDetail->m_xtTag && !pDetail->m_xtTag->m_strLocalInfo.empty())
++            {
++                pDetail->m_strXTTrade = XTTRADE_NAME_LOACL;
++            }
++            else
++            {
++                pDetail->m_strXTTrade = XTTRADE_NAME_OTHER;
++            }
++        }
++    }
